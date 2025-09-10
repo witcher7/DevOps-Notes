@@ -104,6 +104,22 @@
 76. `blkid` – Get UUID of partitions
 77. `iostat` – Show disk I/O stats
 78. `vmstat 1 5` – Monitor memory & CPU
+> STORAGE Management
+```
+sudo fdisk /dev/sdb
+# Inside fdisk:
+n   # new partition
+p   # primary
+1   # partition number
+<Enter>  # default start sector
++10G     # size 10GB
+w   # write changes
+
+# Format and mount
+sudo mkfs.ext4 /dev/sdb1
+sudo mkdir /mnt/data1
+sudo mount /dev/sdb1 /mnt/data1
+```
 
 ---
 
