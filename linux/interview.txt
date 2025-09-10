@@ -1,0 +1,486 @@
+What are 10 Linux commands you use daily? (Excluding basic ones like ls and cd)
+
+📝 Short Explanation
+This question aims to assess your hands-on experience with Linux, focusing on diagnostic, file manipulation, service management, and automation-related commands that go beyond basic navigation.
+
+✅ Answer
+Here are 10 Linux commands I use regularly, excluding the basics like cd, ls, and pwd:
+
+1. tail -f
+tail -f /var/log/nginx/error.log
+🔍 Monitor log files in real time — very useful for debugging issues as they happen.
+
+2. grep
+grep -i "timeout" /var/log/app.log
+🔎 Search through files, logs, or command outputs for specific patterns. I use this to quickly isolate errors.
+
+3. systemctl
+systemctl restart nginx
+🛠️ Control system services — starting, stopping, checking status of systemd services.
+
+4. journalctl
+journalctl -u docker.service -f
+🧾 View logs for systemd-managed services. Especially handy for debugging issues with services like Docker or Kubelet.
+
+5. ps aux | grep
+ps aux | grep nginx
+📋 List running processes. I use this to find rogue or resource-intensive processes.
+
+6. df -h / du -sh
+df -h       # Check available disk space  
+du -sh *    # See folder sizes in current directory
+💾 Essential for disk space monitoring and cleaning up large files or folders.
+
+7. chmod / chown
+chmod +x deploy.sh  
+chown ubuntu:ubuntu script.sh
+🔐 Manage file permissions and ownership — very common in CI/CD and provisioning tasks.
+
+8. find
+find /var/log -name "*.log" -mtime +7
+🔍 Locate files based on name, date, type, etc. Great for automating cleanup or audits.
+
+9. curl
+curl -I http://localhost:8080
+🌐 Test web endpoints, APIs, or service availability from the command line.
+
+
+----------------------------
+
+
+/var is almost 90% full. What will be your next steps?
+
+📝 Short Explanation
+This question checks your troubleshooting and disk management skills. The /var directory is commonly used for logs, spools, caches, and runtime data — so issues here can break system processes or fill up disks silently.
+
+✅ Answer
+My first step is to identify what’s consuming the space inside /var. Then I would clean up unnecessary files like rotated logs, caches, or orphaned packages — and put alerts or log rotation in place to avoid recurrence.
+
+📘 Detailed Explanation
+✅ Step 1: Inspect Disk Usage Under /var
+sudo du -sh /var/* | sort -hr | head -10
+This will show which directories inside /var are consuming the most space — usually it’s /var/log, /var/cache, or /var/lib/docker.
+
+✅ Step 2: Clean Log Files
+If /var/log is the culprit:
+
+sudo journalctl --vacuum-size=200M
+sudo rm -rf /var/log/*.gz /var/log/*.[0-9]
+Or truncate large log files:
+
+sudo truncate -s 0 /var/log/syslog
+✅ Step 3: Clear Package Cache
+If using apt or yum, clear the package manager cache:
+
+sudo apt clean         # Debian/Ubuntu
+sudo yum clean all     # RHEL/CentOS
+✅ Step 4: Check Docker Artifacts
+If the server runs containers:
+
+docker system df        # See what’s taking space
+docker system prune -a  # Remove unused containers/images
+⚠️ Warning: Prune removes unused images and volumes — be cautious on production systems.
+
+✅ Step 5: Consider Moving or Archiving Data
+If data in /var is needed but rarely accessed:
+
+Archive old logs to /home or S3
+Use logrotate to compress and limit logs:
+sudo nano /etc/logrotate.conf
+
+🧠 Why /var Fills Up:
+Verbose logging (e.g., failed cron jobs, app debug logs)
+Docker images/layers
+Orphaned cache files
+Email spools or crash dumps
+Summary:
+Quickly inspect, clean, and automate monitoring. Ensure critical services like journald, docker, and package managers are not starved of space.
+
+------------------------------------------------
+
+Linux Server is slow due to high CPU utilization. How will you fix it?
+
+📝 Short Explanation
+This question assesses your ability to diagnose performance issues, identify root causes, and take targeted actions to reduce CPU load on a production server.
+
+✅ Answer
+I would begin by identifying which processes are consuming the most CPU using tools like top, htop, or pidstat, then analyze whether it's due to a misbehaving application, runaway process, or scheduled job. Based on the findings, I’d take corrective action — either by killing the process, adjusting resource limits, or scaling the workload.
+
+📘 Detailed Explanation
+✅ Step 1: Check Load Average
+uptime
+Example output:
+
+14:02:03 up  3 days,  4:55,  2 users,  load average: 6.02, 4.33, 2.89
+A load average consistently higher than the number of CPU cores indicates overutilization.
+
+✅ Step 2: Identify CPU-Heavy Processes
+top -o %CPU
+or more interactively:
+
+htop
+This shows which processes are consuming the most CPU.
+
+✅ Step 3: Drill Down with ps or pidstat
+ps -eo pid,ppid,cmd,%cpu,%mem --sort=-%cpu | head
+or:
+
+pidstat -u 1 5
+These give detailed insight into CPU consumption over time.
+
+✅ Step 4: Investigate the Cause
+Based on what you see, ask:
+
+Is it a specific app (e.g., Java, Python, Node.js)?
+Is there a cron job or batch script running?
+Is a service misconfigured and looping?
+Is it caused by a known bug (e.g., zombie processes)?
+
+✅ Step 5: Take Corrective Action
+Kill or restart runaway process:
+kill -9 <pid>
+systemctl restart <service>
+Scale the application or move workloads
+Limit resource usage using nice, cpulimit, or cgroups
+Tune app performance (e.g., DB queries, memory leaks)
+
+✅ Step 6: Check Logs
+journalctl -xe
+tail -f /var/log/syslog
+Logs may reveal:
+
+App crashes
+High retry loops
+Configuration issues
+
+
+Refactor long-running or expensive tasks
+🧠 Real-Life Examples:
+A cron script looping due to a bad condition
+A Java app stuck in infinite recursion
+Docker containers running unbounded scraping jobs
+Antivirus or audit daemon consuming CPU after log floods
+
+
+-----------------------------------------------------------
+
+How do you find and list the log files older than 7 days in the /var/log folder?
+
+📝 Short Explanation
+This question tests your comfort with Linux file management and log housekeeping — a common task for DevOps and sysadmins.
+
+✅ Answer
+You can use the find command with the -mtime option to locate files older than 7 days:
+
+find /var/log -type f -mtime +7
+📘 Detailed Explanation
+🔍 Breakdown of the command:
+find: The Linux command to search for files in a directory hierarchy.
+/var/log: The target directory that contains log files.
+-type f: Limits the search to files (not directories).
+-mtime +7: Filters files modified more than 7 days ago.
++7 means strictly older than 7 days.
+-7 would mean newer than 7 days.
+🛠️ Practical Usage:
+If you want to view the size and timestamp of those files:
+
+find /var/log -type f -mtime +7 -exec ls -lh {} \;
+If you want to delete those files:
+
+sudo find /var/log -type f -mtime +7 -delete
+
+
+
+--------------------------------------------
+
+
+## Question  
+How do you find and remove log files older than 30 days using `-exec` in a folder?
+
+### 📝 Short Explanation  
+This version of the task evaluates your comfort with `find -exec`, which is helpful when you want to take specific actions on matched files (like logging or conditional deletion).
+
+## ✅ Answer  
+You can use `-exec rm` with `find` to remove log files older than 30 days:
+
+```bash
+sudo find /path/to/folder -type f -name "*.log" -mtime +30 -exec rm -f {} \;
+```
+
+### 📘 Detailed Explanation  
+
+#### 🔍 Breakdown of the command:
+- `sudo`: Used if the directory (like `/var/log`) requires root access.
+- `find`: The base command to search files.
+- `/path/to/folder`: Replace with your target directory (e.g., `/var/log`).
+- `-type f`: Ensures only files are matched.
+- `-name "*.log"`: Filters files ending with `.log`.
+- `-mtime +30`: Filters files modified **over 30 days ago**.
+- `-exec rm -f {} \;`: Executes the `rm -f` command on each matched file:
+  - `{}` gets replaced by the current file path.
+  - `\;` indicates the end of the command.
+
+---
+
+#### ✅ Example:
+```bash
+sudo find /var/log -type f -name "*.log" -mtime +30 -exec rm -f {} \;
+```
+
+This command will delete all `.log` files in `/var/log` older than 30 days.
+
+---
+
+#### 🧠 Bonus Tip – Dry run before delete:
+You can review the files that would be deleted:
+```bash
+find /var/log -type f -name "*.log" -mtime +30 -exec ls -lh {} \;
+```
+
+---
+
+> Summary:  
+> Using `-exec` gives you fine-grained control over file operations. It's especially useful when you want to extend the logic beyond simple deletion, such as archiving or compressing matched files.
+
+--------------------------------------------------
+
+## Question  
+How do you find and delete files larger than 100MB from a given directory?
+
+### 📝 Short Explanation  
+This question tests your ability to manage disk space and clean up large files using command-line tools — a frequent task for DevOps and Linux admins.
+
+## ✅ Answer  
+
+### 🖥️ Command (Using `find` and `-exec`)
+
+```bash
+find /path/to/directory -type f -size +100M -exec rm -f {} \;
+```
+
+---
+
+### 📘 Detailed Explanation
+
+#### 🔍 Breakdown:
+- `find`: Linux command to search for files and directories.
+- `/path/to/directory`: Replace with your target path (e.g., `/var/log`, `/tmp`).
+- `-type f`: Limits results to files only.
+- `-size +100M`: Matches files larger than 100 megabytes.
+- `-exec rm -f {} \;`: Deletes each matched file:
+  - `{}` is replaced by the filename.
+  - `\;` ends the `-exec` command.
+
+---
+
+### ✅ Preview Without Deleting (Dry Run)
+
+If you just want to see the files that would be deleted:
+
+```bash
+find /path/to/directory -type f -size +100M -exec ls -lh {} \;
+```
+
+This prints the size and path of each file over 100MB.
+
+---
+
+### ⚠️ Best Practices
+- Always dry-run before deleting anything in production.
+- Consider logging deletions or compressing instead of deleting if space permits.
+- Automate safely with cron jobs for specific paths, e.g., `/tmp` or `/var/cache`.
+
+> Summary:  
+> Use `find` with `-size +100M` and `-exec rm` to clean up oversized files and free up space. Always preview first to avoid accidental deletion of important files.
+
+
+
+----------------------------------------------------------------------
+
+
+
+You are asked to monitor multiple services like nginx, sshd, and docker.
+
+Task:
+
+Write a shell script that checks the status of each service.
+If a service is stopped, attempt to restart it.
+Print a clearly formatted report.
+📝 Short Explanation
+This tests your ability to write robust service monitoring automation for multiple services, which is a common expectation in DevOps and SRE roles.
+
+✅ Answer
+🖥️ Shell Script: multi_service_monitor.sh
+#!/bin/bash
+
+# List of services to monitor
+services=("nginx" "sshd" "docker")
+
+# Report Header
+echo "-----------------------------------"
+echo "  Service Health Check Report"
+echo "-----------------------------------"
+
+# Loop through services
+for service in "${services[@]}"; do
+  if systemctl is-active --quiet "$service"; then
+    echo "$service is ✅ RUNNING"
+  else
+    echo "$service is ❌ STOPPED"
+    echo ""
+    echo "Attempting to restart $service..."
+
+    systemctl restart "$service" &> /dev/null
+
+    # Check if restart was successful
+    if systemctl is-active --quiet "$service"; then
+      echo "$service has been ✅ restarted successfully."
+    else
+      echo "❌ Failed to restart $service. Manual intervention needed."
+    fi
+  fi
+  echo "-----------------------------------"
+done
+✅ Example Output (if docker is down):
+-----------------------------------
+  Service Health Check Report
+-----------------------------------
+nginx is ✅ RUNNING
+-----------------------------------
+sshd is ✅ RUNNING
+-----------------------------------
+docker is ❌ STOPPED
+
+Attempting to restart docker...
+docker has been ✅ restarted successfully.
+-----------------------------------
+📘 Detailed Explanation
+services=(...): An array of services to monitor.
+systemctl is-active: Checks if a service is running.
+systemctl restart: Tries to restart the service if it's not active.
+Conditional Restart Check: After restarting, the script confirms whether the service started successfully.
+Output Formatting: Clean section dividers and emojis provide clarity in console or logs.
+⏰ Optional Cron Usage
+To run every 10 minutes:
+
+*/10 * * * * /path/to/multi_service_monitor.sh >> /var/log/service_check.log 2>&1
+
+
+--------------------------------------------------------------------------------
+
+How do you find and delete files larger than 100MB from a given directory?
+
+📝 Short Explanation
+This question tests your ability to manage disk space and clean up large files using command-line tools — a frequent task for DevOps and Linux admins.
+
+✅ Answer
+🖥️ Command (Using find and -exec)
+find /path/to/directory -type f -size +100M -exec rm -f {} \;
+📘 Detailed Explanation
+🔍 Breakdown:
+find: Linux command to search for files and directories.
+/path/to/directory: Replace with your target path (e.g., /var/log, /tmp).
+-type f: Limits results to files only.
+-size +100M: Matches files larger than 100 megabytes.
+-exec rm -f {} \;: Deletes each matched file:
+{} is replaced by the filename.
+\; ends the -exec command.
+✅ Preview Without Deleting (Dry Run)
+If you just want to see the files that would be deleted:
+
+find /path/to/directory -type f -size +100M -exec ls -lh {} \;
+This prints the size and path of each file over 100MB.
+
+⚠️ Best Practices
+Always dry-run before deleting anything in production.
+Consider logging deletions or compressing instead of deleting if space permits.
+Automate safely with cron jobs for specific paths, e.g., /tmp or /var/cache.
+Summary:
+Use find with -size +100M and -exec rm to clean up oversized files and free up space. Always preview first to avoid accidental deletion of important files.
+
+
+-----------------------------------------------------------------------
+
+
+Your website is not loading.
+
+Task:
+Describe the step-by-step investigation process to identify and fix the issue.
+
+📝 Short Explanation
+This is a high-pressure but common scenario that tests your ability to troubleshoot full-stack issues — from DNS and networking to web server and app code.
+
+✅ Answer
+Start from external checks and move inward, layer by layer:
+
+🧭 1. Is the site down for everyone or just me?
+Use:
+
+curl -I https://yourdomain.com
+ping yourdomain.com
+Or check with https://downforeveryoneorjustme.com
+
+🌐 2. DNS Resolution
+dig yourdomain.com
+nslookup yourdomain.com
+✅ Expect to get the correct IP.
+❌ No IP? Check DNS settings in Route53 (AWS) or other DNS provider.
+
+🔁 3. Is the domain routing to the correct server?
+Compare:
+
+curl -v https://yourdomain.com
+with server IP. If misrouted, verify DNS records, load balancer config, or CDN rules.
+
+📡 4. Network/Firewall Check
+From your system:
+telnet yourdomain.com 443
+nc -zv yourdomain.com 80
+Check security groups, firewalls, or NACLs in cloud if ports are blocked.
+🖥️ 5. Is the Web Server running?
+SSH into your instance and check:
+
+sudo systemctl status nginx
+sudo systemctl status apache2
+❌ If it’s down, restart:
+
+sudo systemctl restart nginx
+🧱 6. Check Application Logs
+Look at logs for crash reports or errors:
+
+/var/log/nginx/error.log
+/var/log/httpd/error_log
+App logs: app.log, stderr, etc.
+💾 7. Check Disk/Memory/CPU
+df -h
+top or htop
+free -m
+✅ Ensure the server isn't unresponsive due to resource exhaustion.
+
+🔄 8. Check Backend Services (DB, Cache, etc.)
+Your web app may be up, but failing due to:
+
+MySQL/Postgres down
+Redis/Memcached connection error
+App server crashes
+🔐 9. SSL Certificate Issues
+curl -Iv https://yourdomain.com
+Look for:
+
+SSL certificate problem
+If expired, renew via Let’s Encrypt or your CA.
+
+🧪 10. Rollback or Revert
+If the issue started after a deploy:
+
+Rollback to the previous working build.
+Use:
+kubectl rollout undo deployment your-deployment
+or redeploy old version via your CI/CD.
+
+🧠 Bonus Tip:
+Always check uptime monitoring, alerting tools, or dashboards.
+Build a runbook for your team for repeated scenarios.
+Summary:
+Troubleshooting a website that won’t load requires a methodical approach — from DNS to server and app. Think layers: DNS → Network → Web Server → Application → Infrastructure → Dependencies.
+
