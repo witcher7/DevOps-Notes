@@ -1,0 +1,9 @@
+
+003 Download-Docker-Desktop
+https://www.docker.com/products/docker-desktop/
+
+003 Clone-this-Git-repository-or-download-the-zip-file
+https://github.com/vdespa/install-jenkins-docker
+
+013 How-to-Install-Ubuntu-Desktop-on-a-Virtual-Machine-using-VirtualBox-7
+https://medium.com/devops-with-valentine/how-to-install-ubuntu-desktop-on-a-virtual-machine-using-virtualbox-7-7ee537b609b9?sk=43b208595b53d1e630bffb63e833589f

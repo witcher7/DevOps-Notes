@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz</title>
+
+    <style>
+      body {
+        font-family: sf pro text, -apple-system, BlinkMacSystemFont, Roboto,
+          segoe ui, Helvetica, Arial, sans-serif, apple color emoji,
+          segoe ui emoji, segoe ui symbol;
+        font-weight: 400;
+        line-height: 22.4px;
+        font-size: 16px;
+      }
+      p,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      ul,
+      ol {
+        font-size: 16px;
+        font-weight: 400;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        max-width: none;
+      }
+      code {
+        background-color: #fff;
+        border: 1px solid #d1d7dc;
+        color: #b4690e;
+        font-size: 90%;
+        padding: 0.2rem 0.4rem;
+      }
+      .quiz-content {
+        padding: 2.4rem;
+        word-break: break-word;
+        max-width: 86rem;
+        margin: 0 auto;
+      }
+      .quiz-container {
+        margin: 0 auto;
+        max-width: 84rem;
+        padding: 0;
+      }
+      .question {
+        margin-bottom: 5rem;
+      }
+      .question span {
+        font-size: 24px;
+        font-weight: 700;
+      }
+      .question-prompt {
+        margin-top: 0.8rem;
+        font-weight: 700;
+      }
+      .question-answer {
+        margin-top: 1.6rem;
+        padding-left: 0;
+        box-sizing: border-box;
+      }
+      .question-answer label {
+        max-width: 80rem;
+        position: relative;
+        cursor: pointer;
+        display: flex;
+        min-width: 18rem;
+        border: solid #1c1d1f 2px;
+      }
+      .question-answer div {
+        display: flex;
+        align-items: center;
+        padding: 0.5rem;
+        width: 100%;
+      }
+      .question-answer div:hover {
+        background-color: #f5f5f5;
+      }
+      .question-answer input {
+        display: none;
+      }
+      .question-answer span {
+        width: 1rem;
+        height: 1rem;
+        margin-right: 1.6rem;
+        top: 0;
+        border-radius: 50%;
+        display: inline-block;
+        flex-shrink: 0;
+        border: 0.2rem solid #1c1d1f;
+        position: relative;
+      }
+      .selected {
+        background: #1c1d1f;
+        box-shadow: 0 0 0 0.4rem #fff inset;
+      }
+      .score {
+              position: fixed;
+            }
+    </style>
+  </head>
+
+  <body onload="main()">
+    <div id="score" class="score">
+      <span>Score: N/A of N/A</span>
+    </div>
+    <div id="quiz-container" class="quiz-content"></div>
+
+    <script>
+      const quizData = {"pass_percent": 70, "questions": [{"_class": "assessment", "id": 81297126, "assessment_type": "multiple-choice", "prompt": {"question": "<p>What primary function does Jenkins serve in software development?</p>", "relatedLectureIds": ["42046458"], "feedbacks": ["", "", "", "", ""], "answers": ["<p> It is a text editor for writing and editing code.</p>", "<p> It is a customer relationship management (CRM) tool to interact with clients.</p>", "<p>It is an automation server used for continuous integration and continuous deployment of software.</p>", "<p>It serves as a project management tool to track team tasks and deadlines.</p>", "<p>It is a graphics design software used to create visuals for web applications.</p>"]}, "correct_response": ["c"], "section": "", "question_plain": "What primary function does Jenkins serve in software development?", "related_lectures": [{"_class": "lecture", "id": 42046458, "title": "What is Jenkins?", "created": "2024-01-29T14:44:48Z", "is_published": true, "asset": {"_class": "asset", "id": 55867262, "asset_type": "Video", "title": "1 - 10 - What is Jenkins_V1.mp4", "created": "2024-04-09T18:45:15Z"}, "object_index": 2, "url": "/course/jenkins-ci-cd-pipelines-devops-for-beginners/learn/lecture/42046458"}]}, {"_class": "assessment", "id": 81297594, "assessment_type": "multiple-choice", "prompt": {"question": "<p>What is one of the primary reasons the traditional \"freestyle\" job approach in Jenkins is considered less suitable for modern CI/CD practices?</p>", "relatedLectureIds": ["42049150"], "feedbacks": ["", "", "", "Freestyle jobs in Jenkins do not support the \"pipeline as code\" principle, which leads to significant challenges in modern CI/CD practices. Since configurations in freestyle jobs are done via the Jenkins UI and are not version-controlled, it becomes difficult to track, review, or revert changes, undermining best practices in DevOps that emphasize automation, version control, and repeatability. Additionally, setting up complex workflows with freestyle jobs often requires extensive use of plugins, resulting in fragmented and hard-to-manage setups. "], "answers": ["<p>Freestyle jobs allow changing the source code of the application without using code versioning.</p>", "<p>Freestyle jobs are easier to configure but use more resources.</p>", "<p>Freestyle jobs cannot be configured through the Jenkins UI.</p>", "<p>Freestyle jobs do not natively support the \"pipeline as code\" principle, making it difficult to track configuration changes.</p>"]}, "correct_response": ["d"], "section": "", "question_plain": "What is one of the primary reasons the traditional \"freestyle\" job approach in Jenkins is considered less suitable for modern CI/CD practices?", "related_lectures": [{"_class": "lecture", "id": 42049150, "title": "A bit of Jenkins history", "created": "2024-01-29T16:53:27Z", "is_published": true, "asset": {"_class": "asset", "id": 55867946, "asset_type": "Video", "title": "1 - 25 - A bit of Jenkins history_V1.mp4", "created": "2024-04-09T19:24:26Z"}, "object_index": 6, "url": "/course/jenkins-ci-cd-pipelines-devops-for-beginners/learn/lecture/42049150"}]}, {"_class": "assessment", "id": 81326096, "assessment_type": "multiple-choice", "prompt": {"question": "<p>What is the primary role of the Jenkins controller?</p>", "relatedLectureIds": ["43423452"], "feedbacks": ["", "", "", ""], "answers": ["<p>To manage the execution of the pipeline, delegating actual job execution to agents.</p>", "<p>To execute a job directly on the server.</p>", "<p>To act as the only component necessary for both setting up and running Jenkins jobs.</p>", "<p>To monitor the performance of the Jenkins agents without involving any direct management.</p>"]}, "correct_response": ["a"], "section": "", "question_plain": "What is the primary role of the Jenkins controller?", "related_lectures": [{"_class": "lecture", "id": 43423452, "title": "Jenkins architecture", "created": "2024-04-22T05:39:39Z", "is_published": true, "asset": {"_class": "asset", "id": 56112982, "asset_type": "Video", "title": "1 - 30 - Jenkins architecture_V1.mp4", "created": "2024-04-22T05:40:06Z"}, "object_index": 7, "url": "/course/jenkins-ci-cd-pipelines-devops-for-beginners/learn/lecture/43423452"}]}, {"_class": "assessment", "id": 81326238, "assessment_type": "multiple-choice", "prompt": {"question": "<p>What best describes the purpose of a Jenkins agent?</p>", "relatedLectureIds": ["43423452"], "feedbacks": ["", "", "", ""], "answers": ["<p>It retrieves instructions from the Jenkins controller, executes job stages, and reports the results back.</p>", "<p> It is used to provide security and user management for the Jenkins controller.</p>", "<p>It only monitors the activities of the Jenkins controller without executing any tasks.</p>", "<p>It manages the distribution and scheduling of jobs to various controllers.</p>"]}, "correct_response": ["a"], "section": "", "question_plain": "What best describes the purpose of a Jenkins agent?", "related_lectures": [{"_class": "lecture", "id": 43423452, "title": "Jenkins architecture", "created": "2024-04-22T05:39:39Z", "is_published": true, "asset": {"_class": "asset", "id": 56112982, "asset_type": "Video", "title": "1 - 30 - Jenkins architecture_V1.mp4", "created": "2024-04-22T05:40:06Z"}, "object_index": 7, "url": "/course/jenkins-ci-cd-pipelines-devops-for-beginners/learn/lecture/43423452"}]}, {"_class": "assessment", "id": 81326558, "assessment_type": "multiple-choice", "prompt": {"question": "<p>To streamline their development process, a team considers using Jenkins. What tasks can Jenkins automate?</p>", "relatedLectureIds": ["42046458"], "feedbacks": ["", "", "", ""], "answers": ["<p>Compiling and testing the software to ensure it functions correctly.</p><p><br></p>", "<p>Debugging code issues automatically.</p>", "<p>Managing version control and merging code changes.</p>", "<p>Monitoring server performance and uptime.</p>"]}, "correct_response": ["a"], "section": "", "question_plain": "To streamline their development process, a team considers using Jenkins. What tasks can Jenkins automate?", "related_lectures": [{"_class": "lecture", "id": 42046458, "title": "What is Jenkins?", "created": "2024-01-29T14:44:48Z", "is_published": true, "asset": {"_class": "asset", "id": 55867262, "asset_type": "Video", "title": "1 - 10 - What is Jenkins_V1.mp4", "created": "2024-04-09T18:45:15Z"}, "object_index": 2, "url": "/course/jenkins-ci-cd-pipelines-devops-for-beginners/learn/lecture/42046458"}]}, {"_class": "assessment", "id": 81367068, "assessment_type": "multiple-choice", "prompt": {"question": "<p>What is the primary function of the <code><strong>echo</strong></code> command in a Jenkins job?</p><p><br></p>", "relatedLectureIds": ["42046466"], "feedbacks": ["", "", "", ""], "answers": ["<p>It is used to authenticate users in Jenkins. </p>", "<p>It outputs the text or string provided as an argument. </p>", "<p>It creates a new file</p>", "<p>It initializes the Jenkins job console output.</p>"]}, "correct_response": ["b"], "section": "", "question_plain": "What is the primary function of the echo command in a Jenkins job?", "related_lectures": [{"_class": "lecture", "id": 42046466, "title": "Your first Jenkins job", "created": "2024-01-29T14:45:34Z", "is_published": true, "asset": {"_class": "asset", "id": 55867676, "asset_type": "Video", "title": "1 - 20 - Your first Jenkins job_V1.mp4", "created": "2024-04-09T19:08:10Z"}, "object_index": 5, "url": "/course/jenkins-ci-cd-pipelines-devops-for-beginners/learn/lecture/42046466"}]}, {"_class": "assessment", "id": 81367286, "assessment_type": "multiple-choice", "prompt": {"question": "<p>What is the fundamental difference between a freestyle job and a pipeline job?</p>", "relatedLectureIds": ["42046466"], "feedbacks": ["", "", "", ""], "answers": ["<p>A freestyle job does not allow for any Linux command execution, whereas a pipeline job does. </p>", "<p>A freestyle job uses the Jenkins graphical user interface for configurations, while a pipeline job primarily uses a script in the pipeline section.</p>", "<p> A pipeline job is exclusively used for deploying applications, while a freestyle job is exclusively for building applications. </p><p><br></p>", "<p>A pipeline job cannot run more than one build step, whereas a freestyle job can execute multiple build steps.</p>"]}, "correct_response": ["b"], "section": "", "question_plain": "What is the fundamental difference between a freestyle job and a pipeline job?", "related_lectures": [{"_class": "lecture", "id": 42046466, "title": "Your first Jenkins job", "created": "2024-01-29T14:45:34Z", "is_published": true, "asset": {"_class": "asset", "id": 55867676, "asset_type": "Video", "title": "1 - 20 - Your first Jenkins job_V1.mp4", "created": "2024-04-09T19:08:10Z"}, "object_index": 5, "url": "/course/jenkins-ci-cd-pipelines-devops-for-beginners/learn/lecture/42046466"}]}]};
+      var correct = 0;
+      var total = 0;
+      const questionData = quizData.questions
+      const passPercent = quizData.pass_percent
+
+      function main() {
+        total = questionData.length;
+
+        var questions = [];
+        for (var i = 0; i < questionData.length; i++) {
+          var question = questionData[i];
+          var questionText = question.prompt.question;
+          var answers = question.prompt.answers;
+          var correctAnswer = question.correct_response[0];
+          var correctAnswerText = answers[correctAnswer.charCodeAt(0) - 97];
+          var questionObj = {
+            question: questionText,
+            correctAnswer: correctAnswerText,
+            answers: answers,
+            id: question.id,
+          };
+          questions.push(questionObj);
+        }
+
+        updateScore();
+
+        // display the questions
+        var questionsContainer = document.getElementById("quiz-container");
+        for (var i = 0; i < questions.length; i++) {
+          var question = questions[i];
+          var questionElement = document.createElement("form");
+          questionElement.className = "question";
+          questionElement.innerHTML =
+            "<span>Question " +
+            (i + 1) +
+            ":</span>" +
+            '<div class="question-prompt">' +
+            question.question +
+            "</div>";
+          questionElement.id = question.id;
+          questionElement.classList.add("quiz-container");
+          var answersElement = document.createElement("ul");
+          answersElement.className = "answers";
+          for (var j = 0; j < question.answers.length; j++) {
+            var answer = question.answers[j];
+            var answerElement = document.createElement("li");
+            answerElement.className = "answer";
+            answerElement.innerHTML =
+              '<label for="input-' +
+              question.id +
+              "-" +
+              j +
+              '"><div onclick="select(' +
+              question.id +
+              ", " +
+              j +
+              ')"><span></span><input id="input-' +
+              question.id +
+              "-" +
+              j +
+              '" type="radio" name="question' +
+              i +
+              '" value="' +
+              j +
+              '">' +
+              answer +
+              "</input></div></label>";
+            answerElement.classList.add("question-answer");
+            answersElement.appendChild(answerElement);
+          }
+
+          questionElement.appendChild(answersElement);
+
+          // add a submit button
+          var submitButton = document.createElement("button");
+          submitButton.className = "submit";
+          submitButton.innerHTML = "Submit";
+          submitButton.classList.add("submit-button");
+
+          submitButton.addEventListener("click", function (e) {
+            e.preventDefault();
+            var questionElement = e.target.parentElement;
+            var questionId = questionElement.id;
+            var question = questions.filter(function (q) {
+              return q.id == questionId;
+            })[0];
+
+            // set the border color of all answers to black
+            var answers = questionElement.getElementsByClassName("answer");
+            for (var i = 0; i < answers.length; i++) {
+              console.log(answers[i]);
+              answers[i].children[0].style.borderColor = "#1c1d1f";
+            }
+
+            var answer = questionElement.querySelector(
+              'input[type="radio"]:checked'
+            );
+            if (answer) {
+              var answerIndex = answer.value;
+              var answerText = question.answers[answerIndex];
+              if (answerText == question.correctAnswer) {
+                answer.parentElement.parentElement.style.borderColor =
+                  "limegreen";
+                // alert("Correct!");
+                correct++;
+                updateScore();
+              } else {
+                answer.parentElement.parentElement.style.borderColor = "red";
+                // alert("Incorrect!");
+              }
+            } else {
+              alert("Please select an answer.");
+            }
+          });
+
+          // add button
+          questionElement.appendChild(submitButton);
+
+          questionsContainer.appendChild(questionElement);
+        }
+      }
+
+      function select(question, answer) {
+        var questionElement = document.getElementById(question);
+        var answers = questionElement.getElementsByClassName("answer");
+        for (var i = 0; i < answers.length; i++) {
+          var span = answers[i].children[0].children[0].children[0];
+          var input = answers[i].children[0].children[0].children[1];
+          span.classList.remove("selected");
+          input.checked = false;
+        }
+        var span = answers[answer].children[0].children[0].children[0];
+        var input = answers[answer].children[0].children[0].children[1];
+        span.classList.add("selected");
+        input.checked = true;
+      }
+
+      function updateScore() {
+        var scoreElem = document.getElementById("score");
+        const score = (correct / total) * 100;
+        scoreElem.innerHTML = "Score: " + score + "/" + passPercent + "%";
+      }
+    </script>
+  </body>
+</html>
