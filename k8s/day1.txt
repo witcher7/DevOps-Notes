@@ -1,0 +1,4 @@
+MONOLITHIC SERVICE 
+--> Whole application --> single deployable
+--> Heavy coordination among different teams 
+--> 
