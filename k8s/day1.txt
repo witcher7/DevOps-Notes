@@ -1,4 +1,24 @@
 MONOLITHIC SERVICE 
 --> Whole application --> single deployable
 --> Heavy coordination among different teams 
---> 
+--> A single change might need regression testing of entire application
+--> No partial scaling of application 
+--> Less number of deployables to track 
+--> Equal distribution of resources among sub modules 
+
+
+MICROSERVICE 
+--> small , loosely coupled services 
+--> Minimal coordination among different teams 
+--> A change to a microservice limits its boundry to itself
+and dependant services 
+--> Each microservice in the application can be individually 
+scaled 
+--> Lot many deployables to track 
+--> Resources distribution can be done for each service separately
+
+--SMALL MICROSERVICES--
+Order Management  <--- Build , Test , Deploy 
+Order Fulfillment <--- Build , Test , Deploy 
+Invoicing <---- Deploy , Test, Build 
+
