@@ -17,8 +17,8 @@ scaled
 --> Lot many deployables to track 
 --> Resources distribution can be done for each service separately
 
---SMALL MICROSERVICES--
-Order Management  <--- Build , Test , Deploy 
-Order Fulfillment <--- Build , Test , Deploy 
-Invoicing <---- Deploy , Test, Build 
+ <--SMALL MICROSERVICES-->
+Order Management           <--- Build , Test , Deploy 
+Order Fulfillment          <--- Build , Test , Deploy 
+Invoicing                  <---- Deploy , Test, Build 
 
