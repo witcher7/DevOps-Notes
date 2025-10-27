@@ -68,6 +68,30 @@ sudo journalctl --vacuum-size=200M
 sudo rm -rf /var/log/*.gz /var/log/*.[0-9]
 Or truncate large log files:
 
+find /var/log -type f -name "*.log" -exec truncate -s 0 {} \;
+-exec truncate -s 0 {} \;
+
+This is where the magic happens 💥
+
+-exec → for every file find locates, run a command on it.
+
+truncate -s 0 → the command that sets the file size to 0 bytes.
+🔹 It doesn’t delete the file.
+🔹 It just empties its contents.
+🔹 Keeps ownership, permissions, and log structure intact (important for system stability).
+
+{} → placeholder that represents the current file found by find.
+
+\; → ends the -exec command (escaped semicolon so the shell doesn’t interpret it).
+
+So effectively it means:
+
+“For every .log file found inside /var/log, truncate its contents to zero size.”
+#!/bin/bash
+apt-get clean
+apt-get autoclean
+find /var/cache -type f -delete
+
 sudo truncate -s 0 /var/log/syslog
 ✅ Step 3: Clear Package Cache
 If using apt or yum, clear the package manager cache:
@@ -483,4 +507,5 @@ Always check uptime monitoring, alerting tools, or dashboards.
 Build a runbook for your team for repeated scenarios.
 Summary:
 Troubleshooting a website that won’t load requires a methodical approach — from DNS to server and app. Think layers: DNS → Network → Web Server → Application → Infrastructure → Dependencies.
+
 
