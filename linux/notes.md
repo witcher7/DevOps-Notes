@@ -57,6 +57,12 @@
 44. `strace -p <PID>` – Trace system calls
 45. `lsof -i :8080` – Find process using a port
 
+> Zombie Processes are those that have completed execution but still have an entry in the process table
+> Sleeping Processes are those that are waiting for an event to occur
+> Running Processes are those that are currently executing
+> Stopped Processes are those that have been paused
+> Idle Processes are those that are not doing anything
+> Waiting Processes are those that are waiting for I/O operations
 ---
 
 ## **User & Group Management**
