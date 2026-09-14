@@ -46,12 +46,12 @@
 
 ## **Process & Performance Monitoring**
 
-36. `ps aux` – List running processes
+36. `ps aux / ps -e` – List running processes
 37. `top` – Monitor system resources
-38. `htop` – Interactive process viewer
+38. `hto / jobs(to check background processes)` – Interactive process viewer
 39. `kill -9 <PID>` – Force kill a process   || `kill -15 <PID>` – Graceful kill
 40. `pkill -f processname` – Kill a process by name
-41. `nohup command &` – Run a process in background
+41. `nohup command & OR jobs -> bg %1 / fg %1` – Run a process in background
 42. `nice -n 10 ./script.sh` – Set process priority
 43. `renice -n 5 -p <PID>` – Change process priority
 44. `strace -p <PID>` – Trace system calls
