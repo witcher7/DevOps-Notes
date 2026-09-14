@@ -233,3 +233,13 @@ man grep
  --> /floppy = floppy disk mount point
  --> /cdrom = cdrom mount point
  --> /floppy = floppy disk mount point
+
+
+
+
+## AWK/ SED
+--> awk is used for formatting
+awk '{print $1, $4}` file.txt  # this will print column 1 and column 4
+awk '$3 == "sales" { print $0 }' file.txt # find people where column three category = sales
+awk '{ sum += $4 } END { print "total Salary" ,sum }' file.txt # sum column 4
+awk '{ if ($4 > 50000) print $0 }' file.txt # print people with salary > 50000
