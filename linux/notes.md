@@ -39,8 +39,9 @@
 31. `dig example.com` – Get DNS records
 32. `nslookup example.com` – Query DNS
 33. `ifconfig` – Show network interfaces (deprecated, use `ip a`)
-34. `iptables -L` – Show firewall rules
+34. `iptables -L /  sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT / iptables -A INPUT -p tcp --dport 8080 -j DROP` – Show firewall rules
 35. `ufw status` – Check firewall status
+
 
 ---
 
@@ -233,7 +234,6 @@ man grep
  --> /floppy = floppy disk mount point
  --> /cdrom = cdrom mount point
  --> /floppy = floppy disk mount point
-
 
 
 
