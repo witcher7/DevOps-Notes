@@ -201,3 +201,35 @@ Use **`man <command>`** to check any command’s manual! Example:
 ```bash
 man grep
 ```
+
+
+
+## Directory Heirarchy 
+ --> /bin = system in single user mode
+ --> /sbin = system binaries (commands run by admins reboot,shutdown)
+ --> /usr/bin = user binaries
+ --> /usr/sbin = user system binaries
+ --> /etc = configuration files (system-wide,nginx.conf,operating systems,password,users) 
+ --> /var = variable files
+ --> /home = user home directories
+ --> /root = root user home directory
+ --> /tmp = temporary files
+ --> /dev = device files
+ --> /proc = process information
+ --> /sys = system information
+ --> /media = mounted media
+ --> /mnt = mounted filesystems
+ --> /opt = optional software packages
+ --> /srv = service data
+ --> /boot = boot files
+ --> /lib = system libraries
+ --> /lib64 = 64-bit system libraries
+ --> /lost+found = recovered files
+ --> /run = runtime data
+ --> /snap = snap packages
+ --> /vmlinuz = kernel image
+ --> /initrd.img = initial ramdisk image
+ --> /cdrom = cdrom mount point
+ --> /floppy = floppy disk mount point
+ --> /cdrom = cdrom mount point
+ --> /floppy = floppy disk mount point
