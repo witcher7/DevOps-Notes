@@ -95,6 +95,6 @@ the main difference is that merge creates a new commit while rebase does not
 > git stash - saves the changes to a stash
 > git stash list - shows the list of stashes
 > git stash apply <stash_name> - applies the stash to the current branch
-> git stash pop - applies the last stash to the current branch
+> git stash pop <stash_id/name>- applies the last stash to the current branch
 > git stash drop <stash_name> - deletes a stash
 > git stash clear - deletes all stashes
