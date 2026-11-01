@@ -98,3 +98,17 @@ the main difference is that merge creates a new commit while rebase does not
 > git stash pop <stash_id/name>- applies the last stash to the current branch
 > git stash drop <stash_name> - deletes a stash
 > git stash clear - deletes all stashes
+
+### Git cherry pick is used to select specific commits from one branch and apply them to another branch
+> git cherry-pick <commit_hash> - applies a specific commit to the current branch
+> git cherry-pick <commit_hash1> <commit_hash2> - applies multiple commits to the current branch
+> git cherry-pick <commit_hash1>..<commit_hash2> - applies a range of commits to the current branch
+> git cherry-pick --abort - aborts the cherry pick operation
+> git cherry-pick --continue - continues the cherry pick operation
+> git cherry-pick --quit - quits the cherry pick operation
+
+
+### Git tags 
+> git tag - lists all tags
+> git tag <tag_name> - creates a tag
+> git tag <tag_name> <commit_hash> - creates a tag for a specific commit
