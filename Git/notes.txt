@@ -1,0 +1,28 @@
+> git is a tool for tracking changes in files
+> it is a distributed version control system used for tracking changes in files and coordinating work on projects among multiple developers
+
+## it works in stages
+> Local repository
+This is an area where you make changes to your files
+
+> Remote repository
+This is an area where you store your files online so that anyone can access them
+
+> LOCAL > STAGING > COMMIT > PUSH [STAGING OF CHANGES]
+
+Git commands:
+
+> git add <file_name> - adds a file to the staging area
+> git add . - adds all files to the staging area
+> git add * - adds all files to the staging area
+> git add <folder_name> - adds all files in the folder to the staging area
+
+> git status - shows the status of the files
+> git status --short - shows the status of the files in a more concise format
+> git show --name-only <commit_hash> - shows the files that were changed in the commit
+> git show <commit_hash> - shows the changes made in the commit
+> git log - shows the commit history
+> git log --oneline - shows the commit history in a more concise format
+> git log --graph - shows the commit history in a graph format
+> git log --graph --oneline - shows the commit history in a graph format and in a more concise format
+
