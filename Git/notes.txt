@@ -124,3 +124,14 @@ the main difference is that merge creates a new commit while rebase does not
 > git squash --abort - aborts the squash operation
 > git squash --continue - continues the squash operation
 > git squash --quit - quits the squash operation
+> git merge --squash <branch_name> - combines all commits from a branch into a single commit
+
+### Git revert helps to undo changes that have been pushed to a remote repository
+> git revert <commit_hash> - reverts a specific commit
+> git revert <commit_hash1> <commit_hash2> - reverts multiple commits
+> git revert <commit_hash1>..<commit_hash2> - reverts a range of commits
+> git revert --abort - aborts the revert operation
+> git revert --continue - continues the revert operation
+> git revert --quit - quits the revert operation
+
+### Git reset 
