@@ -69,3 +69,32 @@ Git commands:
 > git remote -v - shows the remote repositories
 > git remote rename <old_name> <new_name> - renames a remote repository
 > git remote remove <name> - removes a remote repository
+
+## git config global user.name
+> git config --global user.name "username"
+> git config --global user.email "email"
+
+
+## difference between merge and rebase
+> git merge <branch_name> - merges the branch with the current branch
+> git rebase <branch_name> - rebases the branch with the current branch
+the main difference is that merge creates a new commit while rebase does not
+
+# git push
+> git push -u origin <branch_name> - pushes the branch to the remote repository
+> git push -f - force pushes the branch to the remote repository
+> git push --delete origin <branch_name> - deletes a branch from the remote repository
+> git push --delete origin <branch_name> --force - force deletes a branch from the remote repository
+
+# git pull
+> git pull - pulls the changes from the remote repository
+> git pull origin <branch_name> - pulls the changes from the remote repository
+> git pull --rebase - pulls the changes from the remote repository and rebases them
+
+# git stashing helps when you want to switch branches but don't want to commit the changes
+> git stash - saves the changes to a stash
+> git stash list - shows the list of stashes
+> git stash apply <stash_name> - applies the stash to the current branch
+> git stash pop - applies the last stash to the current branch
+> git stash drop <stash_name> - deletes a stash
+> git stash clear - deletes all stashes
