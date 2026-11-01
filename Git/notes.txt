@@ -135,3 +135,12 @@ the main difference is that merge creates a new commit while rebase does not
 > git revert --quit - quits the revert operation
 
 ### Git reset 
+> git reset --hard HEAD~1 - resets the current branch to the previous commit
+> git reset --soft HEAD~1 - resets the current branch to the previous commit but keeps the changes
+> git reset --mixed HEAD~1 - resets the current branch to the previous commit but keeps the changes in the working directory
+> git reset --hard <commit_hash> - resets the current branch to a specific commit
+> git reset --soft <commit_hash> - resets the current branch to a specific commit but keeps the changes
+> git reset --mixed <commit_hash> - resets the current branch to a specific commit but keeps the changes in the working directory
+> git reset --hard origin/<branch_name> - resets the current branch to the remote branch
+> git reset --soft origin/<branch_name> - resets the current branch to the remote branch but keeps the changes
+> git reset --mixed origin/<branch_name> - resets the current branch to the remote branch but keeps the changes in the working directory
