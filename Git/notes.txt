@@ -26,3 +26,33 @@ Git commands:
 > git log --graph - shows the commit history in a graph format
 > git log --graph --oneline - shows the commit history in a graph format and in a more concise format
 
+> git commit -m "message" - commits the changes to the local repository
+> git commit -m "message" --amend - amends the last commit
+> git commit --amend --no-edit - amends the last commit without changing the message
+> git commit --amend --reset-author - amends the last commit and resets the author
+> git commit --amend --reset-author --no-edit - amends the last commit and resets the author without changing the message
+
+> git branch - shows all branches
+> git branch <branch_name> - creates a new branch
+> git branch -d <branch_name> - deletes a branch
+> git branch -D <branch_name> - force deletes a branch
+> git branch -m <old_branch_name> <new_branch_name> - renames a branch
+> git branch -M <old_branch_name> <new_branch_name> - force renames a branch
+> git branch -a - shows all branches (local and remote)
+> git branch -r - shows all remote branches
+> git branch -v - shows all branches with last commit hash and message
+> git branch -vv - shows all branches with upstream tracking information
+> git branch --merged - shows all merged branches
+> git branch --no-merged - shows all unmerged branches
+
+>  git switch <branch_name> - switches to a branch
+>  git switch -c <branch_name> - creates a new branch and switches to it
+>  git switch - - switches to the last branch
+>  git switch -d <branch_name> - deletes a branch
+>  git switch -D <branch_name> - force deletes a branch
+
+> git checkout <branch_name> - switches to a branch
+> git checkout -b <branch_name> - creates a new branch and switches to it
+> git checkout - - switches to the last branch
+> git checkout -d <branch_name> - deletes a branch
+> git checkout -D <branch_name> - force deletes a branch
