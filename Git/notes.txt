@@ -40,10 +40,7 @@ Git commands:
 > git branch -M <old_branch_name> <new_branch_name> - force renames a branch
 > git branch -a - shows all branches (local and remote)
 > git branch -r - shows all remote branches
-> git branch -v - shows all branches with last commit hash and message
-> git branch -vv - shows all branches with upstream tracking information
-> git branch --merged - shows all merged branches
-> git branch --no-merged - shows all unmerged branches
+
 
 >  git switch <branch_name> - switches to a branch
 >  git switch -c <branch_name> - creates a new branch and switches to it
@@ -56,3 +53,19 @@ Git commands:
 > git checkout - - switches to the last branch
 > git checkout -d <branch_name> - deletes a branch
 > git checkout -D <branch_name> - force deletes a branch
+
+> git diff branch1..branch2 - shows the differences between two branches
+> git diff commit1 commit2 - shows the differences between two commits
+> git diff --name-only commit1 commit2 - shows the names of the files that were changed between two commits
+
+
+# to save github credentials 
+> git config --global credential.helper store
+> git push
+# now enter username and password, it will be saved in .git-credentials file
+
+# git remote add repo_name <url>
+> git remote add origin <url>
+> git remote -v - shows the remote repositories
+> git remote rename <old_name> <new_name> - renames a remote repository
+> git remote remove <name> - removes a remote repository
