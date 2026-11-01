@@ -78,6 +78,10 @@ Git commands:
 ## difference between merge and rebase
 > git merge <branch_name> - merges the branch with the current branch
 > git rebase <branch_name> - rebases the branch with the current branch
+> git rebase -i <branch_name> - interactive rebase
+> git rebase --abort - aborts the rebase operation
+> git rebase --continue - continues the rebase operation
+> git rebase --quit - quits the rebase operation
 the main difference is that merge creates a new commit while rebase does not
 
 # git push
@@ -112,3 +116,11 @@ the main difference is that merge creates a new commit while rebase does not
 > git tag - lists all tags
 > git tag <tag_name> - creates a tag
 > git tag <tag_name> <commit_hash> - creates a tag for a specific commit
+
+### Git squash means combining multiple commits into a single commit
+> git squash <commit_hash> - combines the commits into a single commit
+> git squash <commit_hash1> <commit_hash2> - combines multiple commits into a single commit
+> git squash <commit_hash1>..<commit_hash2> - combines a range of commits into a single commit
+> git squash --abort - aborts the squash operation
+> git squash --continue - continues the squash operation
+> git squash --quit - quits the squash operation
