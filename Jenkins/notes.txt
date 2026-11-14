@@ -75,3 +75,22 @@ pipeline{
         }
     }
 }
+
+
+### THREE TYPES OF JENKINS PIPELINES
+> FREE STYLE PIPELINE: This is the most basic type of pipeline in Jenkins. It allows users to create jobs with a simple configuration and does not require any scripting knowledge. 
+Users can define build steps, triggers, and post-build actions through the Jenkins web interface.
+
+> SCRIPTED PIPELINE: This type of pipeline is more flexible and allows users to define their build and deployment processes using Groovy scripts.
+ Scripted pipelines provide more control over the flow of the pipeline and allow for complex logic and conditions to be implemented.
+
+> DEclarative PIPELINE: This type of pipeline is a more recent addition to Jenkins and provides a more structured and readable way to define pipelines. 
+Declarative pipelines use a syntax that is similar to other configuration files and allow users to define their build and deployment processes in a more maintainable way.
+
+> Multibranch Pipeline: This type of pipeline is designed to handle multiple branches in a source code repository. It automatically discovers branches and creates separate pipelines for each branch, allowing for parallel builds and testing. Multibranch pipelines are particularly useful for projects with multiple development branches or feature branches.
+
+### WEBHOOK 
+A webhook is a way for an application to provide real-time information to other applications. In the context of Jenkins, webhooks are often used to trigger builds automatically when changes are made to a source code repository.
+When a webhook is set up, the source code repository sends an HTTP POST request to a specified
+URL (the webhook endpoint) whenever a specific event occurs, such as a code commit or a pull request. Jenkins can then receive this request and initiate a build process based on the event.
+
