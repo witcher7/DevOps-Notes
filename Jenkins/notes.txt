@@ -182,3 +182,104 @@ pipeline {
         }
     }
 }
+
+
+### POST ACTIONS 
+Post actions in Jenkins are steps that are executed after the main stages of a pipeline have completed.
+They allow users to define actions that should be taken based on the outcome of the pipeline, such as sending notifications, archiving artifacts, or triggering downstream jobs.
+
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building...'
+                // Add build steps here
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing...'
+                // Add test steps here
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying...'
+                // Add deployment steps here
+            }
+        }
+    }
+    post {
+        always {
+            echo 'This will always run after the stages are complete.'
+        }
+        success {
+            echo 'This will run only if the pipeline succeeds.'
+            // Add success actions here, e.g., send notification, trigger downstream job
+        }
+        failure {
+            echo 'This will run only if the pipeline fails.'
+            // Add failure actions here, e.g., send alert, rollback changes
+        }
+    }
+}
+
+
+### VARIABLES IN JENKINS
+Variables in Jenkins are used to store values that can be reused throughout a pipeline. They can be defined at the global level, within a specific stage, or as environment variables. Variables help make pipelines more flexible and maintainable by allowing users to change values in one place rather than throughout the entire script.
+
+> BUILT IN VARIABLES 
+
+pipeline {
+    agent any
+    environment {
+        // Define global environment variables
+        APP_NAME = 'MyApp'
+        DEPLOY_ENV = 'staging'
+        REGION = 'us-east-1'
+        BUILD_VERSION = '1.0.${env.BUILD_NUMBER}'
+    }
+    stages {
+        stage('Built_in_variables') {
+            steps {
+                echo "Building ${env.DEPLOY_ENV} environment..."
+                // Add build steps here
+                echo "Build_ID is ${env.BUILD_ID}"
+                echo "Build_URL is ${env.BUILD_URL}"
+                echo "Job_Name is ${env.JOB_NAME}"
+                echo "Node_Name is ${env.NODE_NAME}"
+                echo "Workspace is ${env.WORKSPACE}"
+                echo "Executor_Number is ${env.EXECUTOR_NUMBER}"
+                echo "Build_Tag is ${env.BUILD_TAG}"
+            }
+        }
+        stage('Build') {
+            steps {
+                echo "Building ${env.APP_NAME}..."
+                // Add build steps here
+            }
+        }
+        stage('Test') {
+            steps {
+                echo "Testing ${env.APP_NAME} in ${env.DEPLOY_ENV} environment..."
+                // Add test steps here
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo "Deploying ${env.APP_NAME} to ${env.DEPLOY_ENV} environment..."
+                // Add deployment steps here
+            }
+        }
+    }
+}
+
+
+### Mail Notification in Jenkins
+> First , you need to configure the email settings in Jenkins. 
+Go to "Manage Jenkins" > "Configure System" and scroll down to the "E-mail Notification" section. 
+Enter the SMTP server details, default user e-mail suffix, and other required information.
+
+Go to google and search for "SMTP server for gmail" and you will get the SMTP server details for Gmail.
+> then , you can use the "emailext" step in your pipeline to send email notifications.
