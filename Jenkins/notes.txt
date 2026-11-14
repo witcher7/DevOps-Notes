@@ -5,3 +5,30 @@ It follows a master-slave architecture, where the master node manages the build 
 Jenkins provides a web-based interface for configuring jobs, monitoring builds, and viewing results. 
 It also supports pipeline as code, allowing developers to define their build and deployment processes using a domain-specific language (DSL). 
 Overall, Jenkins is a powerful tool that helps teams streamline their development workflows and deliver high-quality software more quickly.
+
+
+Groovy language is used in Jenkins for writing pipeline scripts 
+
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building...'
+                // Add build steps here
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing...'
+                // Add test steps here
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying...'
+                // Add deployment steps here
+            }
+        }
+    }
+}
