@@ -101,3 +101,40 @@ This allows for the creation of complex build pipelines where multiple jobs are 
 
 JOB TRIGGER another JOB --> UPSTREAM JOB
 JOB GETTIJNG TRIGGERED BY another JOB --> DOWNSTREAM JOB
+
+
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building...'
+                // Add build steps here
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing...'
+                // Add test steps here
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying...'
+                // Add deployment steps here
+            }
+        }
+    }
+    post {
+        always {
+            echo 'This will always run after the stages are complete.'
+        }
+        success {
+            echo 'This will run only if the pipeline succeeds.'
+            build job: 'DownstreamJob', parameters: [string(name: 'param1', value: 'value1')] -- give parameters to downstream job if needed
+        }
+        failure {
+            echo 'This will run only if the pipeline fails.'
+        }
+    }
+}
