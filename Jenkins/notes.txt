@@ -138,3 +138,47 @@ pipeline {
         }
     }
 }
+
+
+
+### PARAMETERS IN JENKINS
+Parameters in Jenkins allow users to customize the behavior of a job or pipeline by providing input values at
+the time of execution. 
+Parameters can be used to control various aspects of the build process, such as selecting a specific branch, specifying a version number, or providing configuration options.
+
+pipeline {
+    agent any
+    parameters {
+        string(name: 'BRANCH_NAME', defaultValue: 'main', description: 'Branch to build')
+        booleanParam(name: 'RUN_TESTS', defaultValue: true, description: 'Run tests after build')
+        choice(name: 'ENVIRONMENT', choices: ['dev', 'staging', 'production'], description: 'Deployment environment')
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: params.BRANCH_NAME, url: 'https://github.com/example/repo.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                echo 'Building...'
+                // Add build steps here
+            }
+        }
+        stage('Test') {
+            when {
+                expression { params.RUN_TESTS }
+            }
+            steps {
+                echo 'Running tests...'
+                // Add test steps here
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo "Deploying to ${params.ENVIRONMENT} environment..."
+                // Add deployment steps here
+            }
+        }
+    }
+}
