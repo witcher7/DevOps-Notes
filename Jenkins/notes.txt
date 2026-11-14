@@ -94,3 +94,10 @@ A webhook is a way for an application to provide real-time information to other 
 When a webhook is set up, the source code repository sends an HTTP POST request to a specified
 URL (the webhook endpoint) whenever a specific event occurs, such as a code commit or a pull request. Jenkins can then receive this request and initiate a build process based on the event.
 
+### UPSTREAM AND DOWNSTREAM JOBS
+> Upstream and downstream jobs refer to the relationship between different Jenkins jobs in a build pipeline. 
+An upstream job is a job that triggers another job (the downstream job) upon completion. 
+This allows for the creation of complex build pipelines where multiple jobs are executed in a specific order.
+
+JOB TRIGGER another JOB --> UPSTREAM JOB
+JOB GETTIJNG TRIGGERED BY another JOB --> DOWNSTREAM JOB
